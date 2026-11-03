@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>CampusCode · Hackathon Arena</title>
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+    <link rel="shortcut icon" href="/favicon.svg?v=2" />
+    <script type="module" crossorigin src="/assets/index-BIQcrv5c.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BWHnCfv5.css">
+    <link rel="stylesheet" crossorigin href="/assets/campuscode-enhancements.css">
+
+    <style>
+      /* quick menu */
+      #demo-dropdown-container {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 999999;
+        font-family: 'DM Mono', ui-monospace, monospace;
+      }
+
+      /* trigger button */
+      #demo-dropdown-trigger {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(13, 15, 22, 0.94);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        color: #ffffff;
+        padding: 9px 16px;
+        border-radius: 9999px;
+        border: 1px solid rgba(168, 230, 46, 0.4);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(168, 230, 46, 0.15);
+        cursor: pointer;
+        font-size: 12px;
+        font-family: inherit;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      #demo-dropdown-trigger:hover {
+        border-color: #a8e62e;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(168, 230, 46, 0.3);
+        transform: translateY(-2px);
+      }
+      .dock-pulse {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #a8e62e;
+        box-shadow: 0 0 8px #a8e62e;
+        animation: dockPulse 1.8s infinite;
+      }
+      @keyframes dockPulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.4; transform: scale(0.8); }
+      }
+      .dropdown-chevron {
+        font-size: 10px;
+        color: #a8e62e;
+        transition: transform 0.25s ease;
+      }
+      #demo-dropdown-container.open .dropdown-chevron {
+        transform: rotate(180deg);
+      }
+
+      /* menu dropdown */
+      #demo-dropdown-menu {
+        position: absolute;
+        bottom: calc(100% + 12px);
+        right: 0;
+        width: 270px;
+        background: rgba(14, 16, 24, 0.97);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 14px;
+        padding: 8px;
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 0, 0, 0.4);
+        display: none;
+        flex-direction: column;
+        gap: 4px;
+        transform-origin: bottom right;
+        animation: menuFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      #demo-dropdown-container.open #demo-dropdown-menu {
+        display: flex;
+      }
+      @keyframes menuFadeIn {
+        from { opacity: 0; transform: translateY(6px) scale(0.97); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+
+      .dropdown-header {
+        font-size: 10px;
+        font-weight: 700;
+        color: #7d7f87;
+        letter-spacing: 0.12em;
+        padding: 6px 10px 4px 10px;
+      }
+
+      .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 8px 10px;
+        border-radius: 8px;
+        background: transparent;
+        border: none;
+        color: #f1f1f1;
+        text-align: left;
+        cursor: pointer;
+        font-family: inherit;
+        transition: all 0.18s ease;
+      }
+      .dropdown-item:hover {
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateX(2px);
+      }
+      .dropdown-item .item-icon {
+        font-size: 16px;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .dropdown-item .item-text {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+      .dropdown-item .item-text strong {
+        font-size: 12px;
+        font-weight: 600;
+        color: #ffffff;
+      }
+      .dropdown-item .item-text small {
+        font-size: 10px;
+        color: #8c8f9a;
+      }
+
+      .dropdown-divider {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.08);
+        margin: 4px 6px;
+      }
+
+      .dropdown-item.secondary {
+        color: #b0b3be;
+      }
+      .dropdown-item.danger:hover {
+        background: rgba(255, 82, 82, 0.15);
+        color: #ff6b6b;
+      }
+
+      /* login helper card */
+      .demo-login-card {
+        margin: 16px 0 20px 0;
+        padding: 14px;
+        background: rgba(168, 230, 46, 0.08);
+        border: 1px solid rgba(168, 230, 46, 0.3);
+        border-radius: 10px;
+        text-align: left;
+      }
+      .demo-login-title {
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #5da00a;
+        font-weight: 700;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .demo-login-btns {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .demo-card-btn {
+        padding: 8px 6px;
+        background: #ffffff;
+        border: 1px solid #d4d4cb;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 700;
+        color: #111;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: center;
+      }
+      .demo-card-btn:hover {
+        background: #111;
+        color: #fff;
+        border-color: #111;
+        transform: translateY(-1px);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <!-- demo switch menu -->
+    <div id="demo-dropdown-container">
+      <button id="demo-dropdown-trigger" onclick="toggleDemoDropdown(event)">
+        <span class="dock-pulse"></span>
+        <span>Demo Access</span>
+        <span class="dropdown-chevron">▼</span>
+      </button>
+
+      <div id="demo-dropdown-menu">
+        <div class="dropdown-header">DEMO PROFILES</div>
+
+        <button class="dropdown-item" onclick="window.demoLogin('STUDENT')">
+          <span class="item-icon">🎓</span>
+          <div class="item-text">
+            <strong>Student Arena</strong>
+            <small>Karthik Raja · CEG Anna Univ</small>
+          </div>
+        </button>
+
+        <div class="dropdown-divider"></div>
+
+        <button class="dropdown-item secondary" onclick="window.location.href='/'">
+          <span class="item-icon">✦</span>
+          <div class="item-text">
+            <strong>Home / Landing Page</strong>
+          </div>
+        </button>
+
+        <button class="dropdown-item danger" onclick="window.demoLogout()">
+          <span class="item-icon">⎋</span>
+          <div class="item-text">
+            <strong>Logout / Reset Session</strong>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <script>
+      function toggleDemoDropdown(e) {
+        if (e) e.stopPropagation();
+        const container = document.getElementById('demo-dropdown-container');
+        container.classList.toggle('open');
+      }
+
+      // click outside to close
+      document.addEventListener('click', function(e) {
+        const container = document.getElementById('demo-dropdown-container');
+        if (container && !container.contains(e.target)) {
+          container.classList.remove('open');
+        }
+      });
+
+      // student credentials
+      window.demoLogin = function(role) {
+        const studentUser = {
+          _id: 'usr_demo_student_01',
+          id: 'usr_demo_student_01',
+          name: 'Karthik Raja',
+          email: 'karthik@campuscode.co.in',
+          role: 'STUDENT',
+          campusId: 'CC-CHENNAI-802',
+          college: 'Anna University, CEG Campus',
+          department: 'Computer Science & Engineering',
+          year: '3rd Year'
+        };
+
+        const token = 'demo-student-token-2026';
+        localStorage.setItem('token', token);
+        localStorage.setItem('campuscode_token', token);
+        localStorage.setItem('role', 'STUDENT');
+        localStorage.setItem('user', JSON.stringify(studentUser));
+
+        // redirect to initializing screen
+        window.location.href = '/initializing';
+      };
+
+      window.demoLogout = function() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('campuscode_token');
+        localStorage.removeItem('role');
+        localStorage.removeItem('user');
+        window.location.href = '/login';
+      };
+
+      // helper button on login page
+      function injectLoginHelper() {
+        if (!window.location.pathname.startsWith('/login')) return;
+        const form = document.querySelector('.login-form');
+        if (form && !document.getElementById('demo-login-card')) {
+          try {
+            const card = document.createElement('div');
+            card.id = 'demo-login-card';
+            card.className = 'demo-login-card';
+            card.innerHTML = `
+              <div class="demo-login-title">Quick Student Access</div>
+              <div class="demo-login-btns" style="grid-template-columns: 1fr;">
+                <button type="button" class="demo-card-btn" onclick="window.demoLogin('STUDENT')" style="padding: 10px;">🎓 Student Portal (Karthik Raja · CEG)</button>
+              </div>
+            `;
+            form.insertAdjacentElement('beforebegin', card);
+          } catch (err) {
+            console.warn('Login helper injection notice:', err);
+          }
+        }
+      }
+
+      setInterval(injectLoginHelper, 800);
+    </script>
+    <script src="/assets/three.min.js"></script>
+    <script src="/assets/campuscode-3d-arena.js"></script>
+  </body>
+</html>

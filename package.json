@@ -1,0 +1,15 @@
+{
+  "name": "campuscode-platform",
+  "version": "1.0.0",
+  "description": "CampusCode hackathon platform client and dev server",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "campuscode",
+    "hackathon",
+    "frontend"
+  ],
+  "author": "",
+  "license": "ISC"
+}
