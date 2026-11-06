@@ -230,13 +230,15 @@ module.exports = (req, res, customSubpath) => {
     : (req.url || '').replace(/^\/api/, '').split('?')[0];
 
   // Handle Vercel [...slug] routing
-  if (cleanPath === '/[...slug]' || cleanPath === '' || cleanPath === '/') {
+  if (cleanPath === '/[...slug].js' || cleanPath === '/[...slug]' || cleanPath === '' || cleanPath === '/') {
     if (req.query && req.query.slug) {
       cleanPath = Array.isArray(req.query.slug)
         ? '/' + req.query.slug.join('/')
         : (req.query.slug.startsWith('/') ? req.query.slug : '/' + req.query.slug);
     } else if (req.headers['x-matched-path']) {
       cleanPath = req.headers['x-matched-path'].replace(/^\/api/, '').split('?')[0];
+    } else if (req.headers['x-forwarded-uri']) {
+      cleanPath = req.headers['x-forwarded-uri'].replace(/^\/api/, '').split('?')[0];
     }
   }
 
