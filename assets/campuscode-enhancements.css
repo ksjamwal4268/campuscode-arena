@@ -930,7 +930,7 @@ body.sidebar-is-expanded .cc-3lines-trigger .cc-bar-3 {
   box-shadow: 24px 0 70px rgba(0, 0, 0, 0.88) !important;
 }
 
-/* round 1 student sidebar items */
+/* student sidebar items - round 2 fully connected */
 .student-sidebar .student-nav {
   display: flex !important;
   flex-direction: column !important;
@@ -938,7 +938,7 @@ body.sidebar-is-expanded .cc-3lines-trigger .cc-bar-3 {
 }
 
 .student-sidebar .student-nav-item {
-  display: none !important;
+  display: flex !important;
 }
 
 .student-sidebar .student-nav-item.round1-visible {

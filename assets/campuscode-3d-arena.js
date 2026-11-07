@@ -658,7 +658,7 @@
     }
   }
 
-  // round 1: keep only events, my events, and profile on the left sidebar
+  // round 2: all student sidebar items connected & visible
   function filterStudentSidebarItems() {
     const isStudent = window.location.pathname.startsWith('/student');
     if (!isStudent) return;
@@ -666,36 +666,10 @@
     const sidebarItems = document.querySelectorAll('.student-sidebar .student-nav-item');
     if (!sidebarItems || sidebarItems.length === 0) return;
 
-    const allowedNames = ['events', 'my events', 'profile'];
-    let eventsButton = null;
-    let hasAllowedActive = false;
-
     sidebarItems.forEach(item => {
-      const text = (item.textContent || '').trim().toLowerCase();
-      // check if it matches events, my events, or profile
-      const isMyEvents = text.includes('my events');
-      const isEvents = text.includes('events') && !isMyEvents;
-      const isProfile = text.includes('profile');
-
-      if (isEvents) eventsButton = item;
-
-      if (isMyEvents || isEvents || isProfile) {
-        item.classList.add('round1-visible');
-        item.style.setProperty('display', 'flex', 'important');
-        if (item.classList.contains('active')) {
-          hasAllowedActive = true;
-        }
-      } else {
-        item.classList.remove('round1-visible');
-        item.style.setProperty('display', 'none', 'important');
-      }
+      item.classList.add('round1-visible');
+      item.style.setProperty('display', 'flex', 'important');
     });
-
-    // on initial load, if on overview or disconnected tab, switch to events
-    if (!hasAllowedActive && eventsButton && !window.__switchedToEventsOnce) {
-      window.__switchedToEventsOnce = true;
-      eventsButton.click();
-    }
   }
 
   // update stages based on scroll progress

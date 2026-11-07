@@ -229,6 +229,22 @@
           </div>
         </button>
 
+        <button class="dropdown-item" onclick="window.demoLogin('ORGANIZER')">
+          <span class="item-icon">⚡</span>
+          <div class="item-text">
+            <strong>Organizer Portal</strong>
+            <small>Priya Narayanan · Director</small>
+          </div>
+        </button>
+
+        <button class="dropdown-item" onclick="window.demoLogin('ADMIN')">
+          <span class="item-icon">🛡️</span>
+          <div class="item-text">
+            <strong>Administrator Panel</strong>
+            <small>CampusCode Platform Overseer</small>
+          </div>
+        </button>
+
         <div class="dropdown-divider"></div>
 
         <button class="dropdown-item secondary" onclick="window.location.href='/'">
@@ -262,8 +278,47 @@
         }
       });
 
-      // student credentials
+      // credentials configuration
       window.demoLogin = function(role) {
+        if (role === 'ORGANIZER') {
+          const orgUser = {
+            _id: 'usr_demo_org_01',
+            id: 'usr_demo_org_01',
+            name: 'Priya Narayanan',
+            email: 'priya.organizer@campuscode.co.in',
+            role: 'ORGANIZER',
+            organization: 'Chennai Tech Council',
+            phone: '+91 98401 23456',
+            avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=Priya'
+          };
+          const token = 'demo-organizer-token-2026';
+          localStorage.setItem('token', token);
+          localStorage.setItem('campuscode_token', token);
+          localStorage.setItem('role', 'ORGANIZER');
+          localStorage.setItem('user', JSON.stringify(orgUser));
+          window.location.href = '/organizer';
+          return;
+        }
+
+        if (role === 'ADMIN') {
+          const adminUser = {
+            _id: 'usr_demo_admin_01',
+            id: 'usr_demo_admin_01',
+            name: 'CampusCode Administrator',
+            email: 'admin@campuscode.co.in',
+            role: 'ADMIN',
+            avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=Admin'
+          };
+          const token = 'demo-admin-token-2026';
+          localStorage.setItem('token', token);
+          localStorage.setItem('campuscode_token', token);
+          localStorage.setItem('role', 'ADMIN');
+          localStorage.setItem('user', JSON.stringify(adminUser));
+          window.location.href = '/admin';
+          return;
+        }
+
+        // default to student
         const studentUser = {
           _id: 'usr_demo_student_01',
           id: 'usr_demo_student_01',
@@ -273,7 +328,12 @@
           campusId: 'CC-CHENNAI-802',
           college: 'Anna University, CEG Campus',
           department: 'Computer Science & Engineering',
-          year: '3rd Year'
+          year: '3rd Year',
+          bio: 'Building AI agents and modern web experiences.',
+          phone: '+91 98765 43210',
+          skills: ['React', 'TypeScript', 'Python', 'TailwindCSS', 'Node.js'],
+          stats: { registered: 3, ongoing: 1, completed: 2, certificates: 2, points: 1420 },
+          avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=Karthik'
         };
 
         const token = 'demo-student-token-2026';
@@ -304,9 +364,11 @@
             card.id = 'demo-login-card';
             card.className = 'demo-login-card';
             card.innerHTML = `
-              <div class="demo-login-title">Quick Student Access</div>
-              <div class="demo-login-btns" style="grid-template-columns: 1fr;">
-                <button type="button" class="demo-card-btn" onclick="window.demoLogin('STUDENT')" style="padding: 10px;">🎓 Student Portal (Karthik Raja · CEG)</button>
+              <div class="demo-login-title">Quick Demo Portals</div>
+              <div class="demo-login-btns" style="grid-template-columns: 1fr; gap: 8px;">
+                <button type="button" class="demo-card-btn" onclick="window.demoLogin('STUDENT')" style="padding: 8px 10px; display: flex; align-items: center; justify-content: flex-start; gap: 8px;"><span>🎓</span> <span><strong>Student Arena</strong> · Karthik (CEG)</span></button>
+                <button type="button" class="demo-card-btn" onclick="window.demoLogin('ORGANIZER')" style="padding: 8px 10px; display: flex; align-items: center; justify-content: flex-start; gap: 8px;"><span>⚡</span> <span><strong>Organizer Portal</strong> · Priya Narayanan</span></button>
+                <button type="button" class="demo-card-btn" onclick="window.demoLogin('ADMIN')" style="padding: 8px 10px; display: flex; align-items: center; justify-content: flex-start; gap: 8px;"><span>🛡️</span> <span><strong>Admin Dashboard</strong> · CampusCode Admin</span></button>
               </div>
             `;
             form.insertAdjacentElement('beforebegin', card);
